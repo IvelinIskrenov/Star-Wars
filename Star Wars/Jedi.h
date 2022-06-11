@@ -1,5 +1,7 @@
 #pragma once
 #include<iostream>
+class Jedi;
+class Planet;
 #include <vector>
 #include "Validations.h"
 

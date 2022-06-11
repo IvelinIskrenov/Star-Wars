@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
-#include "Jedi.h"
-#include <vector>
 #include <string>
+#include "Jedi.h"
+#include "Validations.h"
 
 const size_t JEDI_START_COUNT = 2;
 
@@ -16,9 +16,8 @@ public:
 	Planet();
 	Planet(const Planet& other);
 	Planet& operator=(const Planet& other);
-	std::vector<Jedi> getJedi() { return jedi; };
+	std::vector<Jedi>& getJedi() { return jedi; };
 	std::string getPlanetName() { return planetName; };
-	void addJedi(Jedi& other);
-	void removeJedi(Jedi& other);
+	
 };
 

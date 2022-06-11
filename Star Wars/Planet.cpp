@@ -1,5 +1,4 @@
 #include "Planet.h"
-#include <vector>
 #include "Jedi.h"
 
 void Planet::copy(const Planet& other)
@@ -15,6 +14,7 @@ void Planet::copy(const Planet& other)
 Planet::Planet()
 {
 	planetName = "";
+	jedi.emplace_back();
 }
 
 Planet::Planet(const Planet& other)
@@ -29,39 +29,4 @@ Planet& Planet::operator=(const Planet& other)
 		copy(other);
 	}
 	return *this;
-}
-
-void Planet::addJedi(Jedi& other)
-{
-	size_t length = jedi.size();
-	bool jediExists = false;
-	for (size_t i = 0; i < length; i++)
-	{
-		if (jedi[i].getName() == other.getName())
-		{
-			jediExists = true;
-		}
-	}
-	if (jediExists = true)
-	{
-		jedi.push_back(other);
-	}
-	else
-	{
-		std::cout << "There";
-	}
-}
-
-void Planet::removeJedi(Jedi& other)
-{
-	size_t length = jedi.size();
-	bool jediExists = false;
-	for (size_t i = 0; i < length; i++)
-	{
-		if (jedi[i].getName() == other.getName())
-		{
-			jediExists = true;
-		}
-	}
-
 }

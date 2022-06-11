@@ -3,10 +3,7 @@
 #include "Validations.h"
 
 void testProgram()
-{
-	std::string command;
-	std::cin >> command;
-	
+{	
 	std::cout << "Commands:\n";
 	std::cout << "create_jedi : Create jedi\n";
 	std::cout << "removeJedi : Remove jedi\n";
@@ -14,10 +11,15 @@ void testProgram()
 	std::cout << "demote_jedi : Demote jedi\n";
 	std::cout << "get_strongest_jedi : Print information about the strongest jedi on a given planet \n";
 	std::cout << "get_youngest_jedi : Print information about the youngest jedi on a given planet\n";
-	std::cout << "demote_jedi : Demote jedi\n";
-	std::cout << "demote_jedi : Demote jedi\n";
-	std::cout << "demote_jedi : Demote jedi\n";
-	std::cout << "demote_jedi : Demote jedi\n";
+	std::cout << "get_most_used_saber_color : Returns the most common color of light sword in the given rank of the planet\n";
+	std::cout << "get_most_used_saber_colorGM : Returns the most common color of light sword on a planet that enjoys at least one GRAND_MASTER\n";
+	std::cout << "print_planet : Displays the name of the planet and the jedi inhabiting it,sort by rank\n";
+	std::cout << "print_jedi : Print jedi information\n";
+
+	std::string command;
+	std::cin >> command;
+
+	std::vector<Planet> cosmicPlanets;
 
 	while (command != "exit")
 	{
@@ -49,7 +51,7 @@ void testProgram()
 		{
 
 		}
-		else if (command == "get_most_used_saber_colorG")
+		else if (command == "get_most_used_saber_colorGM")
 		{
 
 		}

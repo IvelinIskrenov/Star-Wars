@@ -1,7 +1,7 @@
 #include "Validations.h"
 #include <iostream>
-
-bool jediExists(std::vector<Planet> planets, std::string passedJediName)
+#include "Jedi.h"
+bool jediExists(std::vector<Planet>& planets, std::string passedJediName)
 {
 	size_t length = planets.size();
 	for (size_t i = 0; i < length; i++)
@@ -18,7 +18,7 @@ bool jediExists(std::vector<Planet> planets, std::string passedJediName)
 	return false;
 }
 
-bool planetExists(std::vector<Planet> planets, std::string passedPlanetName)
+bool planetExists(std::vector<Planet>& planets, std::string passedPlanetName)
 {
 	size_t length = planets.size();
 	for (size_t i = 0; i < length; i++)
