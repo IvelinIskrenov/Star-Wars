@@ -18,24 +18,30 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="myString.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Jedi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Planet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneralFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Validations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="myString.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Jedi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Planet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Validations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

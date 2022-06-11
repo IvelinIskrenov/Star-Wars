@@ -1,51 +1,36 @@
 #include "Jedi.h"
 
-void Jedi::copy(Jedi& other)
+void Jedi::copy(const Jedi& other)
 {
-	if (other.name == "")
-	{
-		std::cout << "There isn't a jedi name !\n";
-	}
-	else
-	{
-		name = other.name;
-	}
-	if (checkRanks(other.rank))
+	name = other.name;
+	if (isRankValid(other.rank))
 	{
 		rank = other.rank;
 	}
 	else
 	{
-		std::cout << "Invalid rank !\n";
+		std::cout << "Invalid rank!\n";
 	}
-	if (other.age < 0 || other.age > 100)
-	{
-		std::cout << "Invalid age !";
-	}
-	else
+	if (ageValid(other.age))
 	{
 		age = other.age;
 	}
-	if (other.lightsaberColor == "")
-	{
-		std::cout << "There isn't a lightsaberColor !\n";
-	}
 	else
 	{
-		lightsaberColor = other.lightsaberColor;
+		std::cout << "Invalid age!\n";
 	}
-	if (other.power < 0)
-	{
-		std::cout << "Power can't be under 0 !\n";
-	}
-	else
-	{
-		power = other.power;
-	}
+	
+	lightsaberColor = other.lightsaberColor;
+	power = other.power;
 }
 
 
-Jedi& Jedi::operator=(Jedi& other)
+Jedi::Jedi(const Jedi& other)
+{
+	copy(other);
+}
+
+Jedi& Jedi::operator=(const Jedi& other)
 {
 	if (&other != this)
 	{
@@ -54,10 +39,9 @@ Jedi& Jedi::operator=(Jedi& other)
 	return *this;
 }
 
-//possible mistake
-bool Jedi::checkRanks(myString currentRank)
+bool Jedi::operator==(const Jedi& other)
 {
-	if (currentRank != "YOUNGLING" || "INITIATE" || "PADAWAN" || "KNIGHT-ASPIRANT" || "KNIGHT" || "MASTER" || "BATTLE_MASTER" || "GRAND_MASTER")
+	if (name != other.name)
 	{
 		return false;
 	}
@@ -71,4 +55,28 @@ Jedi::Jedi()
 	age = 0;
 	lightsaberColor = "no lightsaber";
 	power = 0;
+}
+
+Jedi::Jedi(const std::string _name, const std::string _rank, unsigned _age, const std::string _lightsaberColor, double _power)
+{
+	name = _name;
+	if (isRankValid(_rank))
+	{
+		rank = _rank;
+	}
+	else
+	{
+		std::cout << "Invalid rank!\n";
+	}
+	if (ageValid(_age))
+	{
+		age = _age;
+	}
+	else
+	{
+		std::cout << "Invalid age!\n";
+	}
+
+	lightsaberColor = _lightsaberColor;
+	power = _power;
 }

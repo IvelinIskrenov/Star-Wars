@@ -1,22 +1,24 @@
 #pragma once
 #include <iostream>
-#include "myString.h"
 #include "Jedi.h"
+#include <vector>
+#include <string>
+
+const size_t JEDI_START_COUNT = 2;
 
 class Planet
 {
 private :
-	myString planetName;
-	Jedi* jedi;
-	void copy(Planet& other);
-	void clear();
+	std::string planetName;
+	std::vector<Jedi> jedi;
+	void copy(const Planet& other);
 public:
 	Planet();
-	Planet(Planet& other);
-	Planet& operator=(Planet& other);
-	~Planet();
-
-	void addJedi();
-	void removeJedi();
+	Planet(const Planet& other);
+	Planet& operator=(const Planet& other);
+	std::vector<Jedi> getJedi() { return jedi; };
+	std::string getPlanetName() { return planetName; };
+	void addJedi(Jedi& other);
+	void removeJedi(Jedi& other);
 };
 
