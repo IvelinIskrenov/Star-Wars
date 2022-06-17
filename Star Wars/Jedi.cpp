@@ -22,6 +22,7 @@ void Jedi::copy(const Jedi& other)
 	
 	lightsaberColor = other.lightsaberColor;
 	power = other.power;
+	planetName = other.planetName;
 }
 
 
@@ -55,9 +56,10 @@ Jedi::Jedi()
 	age = 0;
 	lightsaberColor = "no lightsaber";
 	power = 0;
+	planetName = "no planet";
 }
 
-Jedi::Jedi(const std::string _name, const std::string _rank, unsigned _age, const std::string _lightsaberColor, double _power)
+Jedi::Jedi(const std::string _name, const std::string _rank, unsigned _age, const std::string _lightsaberColor, double _power, const std::string _planetName)
 {
 	name = _name;
 	if (isRankValid(_rank))
@@ -79,4 +81,5 @@ Jedi::Jedi(const std::string _name, const std::string _rank, unsigned _age, cons
 
 	lightsaberColor = _lightsaberColor;
 	power = _power;
+	planetName = _planetName;
 }

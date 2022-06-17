@@ -13,10 +13,12 @@ private:
 	unsigned age;
 	std::string lightsaberColor;
 	double power;
+	//Името на планетата която джедая населява
+	std::string planetName;
 	void copy(const Jedi& other);
 public:
 	Jedi();
-	Jedi(const std::string _name, const std::string _rank, unsigned _age, const  std::string _lightsaberColor, double _power);
+	Jedi(const std::string _name, const std::string _rank, unsigned _age, const  std::string _lightsaberColor, double _power, const std::string _planetName);
 	Jedi(const Jedi& other);
 	Jedi& operator=(const Jedi& other);
 	bool operator==(const Jedi& other);

@@ -9,8 +9,8 @@ void addJedi()
 
 int main()
 {
-	Jedi firstJedi("dart", "INITIATE", 20, "blue", 22);
+	//Jedi firstJedi("dart", "INITIATE", 20, "blue", 22);
 	Jedi secondJedi;
-	secondJedi = firstJedi;
+	//secondJedi = firstJedi;
 	return 0;
 }

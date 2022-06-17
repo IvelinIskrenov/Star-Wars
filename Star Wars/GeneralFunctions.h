@@ -3,5 +3,6 @@
 #include "Jedi.h"
 #include "Validations.h"
 
-void testProgram();
 void createJedi(std::vector<Planet> cosmicPlanets);
+void removeJedi(std::vector<Planet> cosmicPlanets);
+void testProgram();

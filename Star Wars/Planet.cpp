@@ -30,3 +30,13 @@ Planet& Planet::operator=(const Planet& other)
 	}
 	return *this;
 }
+
+void Planet::addJedi(const Jedi& jediToAdd)
+{
+	jedi.push_back(jediToAdd);
+}
+
+void Planet::removeJedi(size_t removeIndex)
+{
+	jedi.erase(jedi.begin() + removeIndex);
+}
