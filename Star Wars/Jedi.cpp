@@ -49,6 +49,35 @@ bool Jedi::operator==(const Jedi& other)
 	return true;
 }
 
+void Jedi::setPower(double multiplier)
+{
+	if (multiplier > 0)
+	{
+		power *= multiplier;
+	}
+	else
+	{
+		std::cout << "Multiplier must be positive\n";
+	}
+}
+
+std::string Jedi::getJediRank()
+{
+	return rank;
+}
+
+void Jedi::setJediRank(std::string newRank)
+{
+		if (isRankValid(newRank) == true)
+		{
+			rank = newRank;
+		}
+		else
+		{
+			std::cout << "There is no rank with that name!";
+		}
+}
+
 Jedi::Jedi()
 {
 	name = "no name";

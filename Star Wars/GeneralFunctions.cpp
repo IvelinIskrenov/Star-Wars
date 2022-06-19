@@ -8,6 +8,10 @@ void createJedi(std::vector<Planet> cosmicPlanets)
 	std::cin >> jediName;
 	std::string jediRank;
 	std::cin >> jediRank;
+	while (isRankValid(jediRank) == false)
+	{
+		std::cin >> jediRank;
+	}
 	unsigned age;
 	std::cin >> age;
 	std::string lightsaberColor;
@@ -66,6 +70,141 @@ void removeJedi(std::vector<Planet> cosmicPlanets)
 	else
 	{
 		std::cout << "Cant create new jedi,there is no planet with that name!\n";
+	}
+}
+
+void promoteJedi(std::vector<Planet> cosmicPlanets)
+{
+	double multiplier;
+	std::cin >> multiplier;
+	std::string currentJedi;
+	std::cin >> currentJedi;
+	if (jediExists(cosmicPlanets,currentJedi))
+	{
+		if (multiplier > 0)
+		{
+			size_t length = cosmicPlanets.size();
+			for (size_t i = 0; i < length; i++)
+			{
+				if (cosmicPlanets[i].getJedi()[i].getName() == currentJedi)
+				{
+					std::string tempRanks[8];
+					tempRanks[0] = "YOUNGLING";
+					tempRanks[1] = "INITIATE";
+					tempRanks[2] = "PADAWAN";
+					tempRanks[3] = "KNIGHT-ASPIRANT";
+					tempRanks[4] = "KNIGHT";
+					tempRanks[5] = "MASTER";
+					tempRanks[6] = "BATTLE_MASTER";
+					tempRanks[7] = "GRAND_MASTER";
+					for (size_t j = 0; j < 7; j++)
+					{
+						if (cosmicPlanets[i].getJedi()[i].getJediRank() == tempRanks[j])
+						{
+							cosmicPlanets[i].getJedi()[i].setJediRank(tempRanks[j + 1]);
+							break;
+						}
+						else
+						{
+							std::cout << "Jedi can't be promote more then GRAND_MASTER\n";
+						}
+					}
+					double newPower = 1 + multiplier;
+					cosmicPlanets[i].getJedi()[i].setPower(newPower);
+					break;
+				}
+			}
+		}
+		else
+		{
+			std::cout << "Multiplier must be possitive!\n";
+		}
+	}
+}
+
+void demoteJedi(std::vector<Planet> cosmicPlanets)
+{
+	double multiplier;
+	std::cin >> multiplier;
+	std::string currentJedi;
+	std::cin >> currentJedi;
+	if (jediExists(cosmicPlanets, currentJedi))
+	{
+		if (multiplier > 0)
+		{
+			size_t length = cosmicPlanets.size();
+			for (size_t i = 0; i < length; i++)
+			{
+				if (cosmicPlanets[i].getJedi()[i].getName() == currentJedi)
+				{
+					std::string tempRanks[8];
+					tempRanks[0] = "YOUNGLING";
+					tempRanks[1] = "INITIATE";
+					tempRanks[2] = "PADAWAN";
+					tempRanks[3] = "KNIGHT-ASPIRANT";
+					tempRanks[4] = "KNIGHT";
+					tempRanks[5] = "MASTER";
+					tempRanks[6] = "BATTLE_MASTER";
+					tempRanks[7] = "GRAND_MASTER";
+					for (size_t j = 1; j < 8; j++)
+					{
+						if (cosmicPlanets[i].getJedi()[i].getJediRank() == tempRanks[j])
+						{
+							cosmicPlanets[i].getJedi()[i].setJediRank(tempRanks[j - 1]);
+							break;
+						}
+						else
+						{
+							std::cout << "Jedi can't be demote more then YOUNGLING\n";
+						}
+					}
+					double newPower = 1 - multiplier;
+					cosmicPlanets[i].getJedi()[i].setPower(newPower);
+					break;
+				}
+			}
+		}
+		else
+		{
+			std::cout << "Multiplier must be possitive!\n";
+		}
+	}
+}
+
+void getStrongestJedi(std::vector<Planet> cosmicPlanets)
+{
+	std::string planetName;
+	std::cin >> planetName;
+	size_t length = cosmicPlanets.size();
+	Jedi strongestJedi;
+	for (size_t i = 0; i < length; i++)
+	{
+		if (cosmicPlanets[i].getPlanetName() == planetName)
+		{
+			size_t jediCount = cosmicPlanets[i].getJedi().size();
+			if (jediCount > 0)
+			{
+				strongestJedi = cosmicPlanets[i].getJedi()[0];
+				for (size_t j = 0; j < jediCount; j++)
+				{
+					if (strongestJedi.getPower() < cosmicPlanets[i].getJedi()[i].getPower())
+					{
+						strongestJedi = cosmicPlanets[i].getJedi()[i];
+					}
+				}
+				std::cout << "The strongest jedi " << strongestJedi.getName() << " with rank "
+					<< strongestJedi.getJediRank() << ", light saber color " << strongestJedi.getLightsaberColor()
+					<< ", age " << strongestJedi.getAge() << " have " << strongestJedi.getPower() << " power !\n";
+			}
+			else
+			{
+				std::cout << "There is no jedi on this planet!\n";
+			}
+		}
+		else
+		{
+			std::cout << "There is no planet with that name!\n";
+		}
 	}
 }
 

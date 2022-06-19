@@ -22,6 +22,12 @@ public:
 	Jedi(const Jedi& other);
 	Jedi& operator=(const Jedi& other);
 	bool operator==(const Jedi& other);
+	void setPower(double multiplier);
+	std::string getJediRank();
+	double getPower() { return power; };
+	std::string getLightsaberColor() { return lightsaberColor; };
+	unsigned getAge() { return age; };
+	void setJediRank(std::string newRank);
 	//Проверява дали ранга е правилен
 	std::string getName() { return name; };
 };
