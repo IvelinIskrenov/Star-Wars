@@ -208,6 +208,65 @@ void getStrongestJedi(std::vector<Planet> cosmicPlanets)
 	}
 }
 
+void getYongestJedi(std::vector<Planet> cosmicPlanets)
+{
+	std::string planetName;
+	std::cin >> planetName;
+	std::string rankJedi;
+	std::cin >> rankJedi;
+	size_t length = cosmicPlanets.size();
+	Jedi yongestJedi;
+
+	//search the planet
+	for (size_t i = 0; i < length; i++)
+	{
+		if (cosmicPlanets[i].getPlanetName() == planetName)
+		{
+			size_t jediCount = cosmicPlanets[i].getJedi().size();
+			if (jediCount > 0)
+			{
+				bool yongestJediExists = false;
+				//search the first jedi with rank YOUNGLING
+				for (size_t j = 0; j < jediCount; j++)
+				{
+					if (cosmicPlanets[i].getJedi()[j].getJediRank() == "YOUNGLING")
+					{
+						yongestJedi = cosmicPlanets[i].getJedi()[j];
+						yongestJediExists = true;
+						//searching jedi with smallest name
+						for (size_t k = j; k < jediCount; k++)
+						{
+							if (yongestJedi.getName() < cosmicPlanets[i].getJedi()[k].getName())
+							{
+								yongestJedi = cosmicPlanets[i].getJedi()[k];
+							}
+						}
+						break;
+					}
+				}
+				if (yongestJediExists == false)
+				{
+					std::cout << "There is no jedi with rank YOUNGLING!\n";
+				}
+				else
+				{
+					std::cout << "The yongest jedi " << yongestJedi.getName() << " with rank "
+						<< yongestJedi.getJediRank() << ", light saber color " << yongestJedi.getLightsaberColor()
+						<< ", age " << yongestJedi.getAge() << " have " << yongestJedi.getPower() << " power !\n";
+				}
+			}
+			else
+			{
+				std::cout << "There is no jedi on this planet!\n";
+			}
+		}
+		else
+		{
+			std::cout << "There is no planet with that name!\n";
+		}
+	}
+}
+
 void testProgram()
 {	
 	std::cout << "Commands:\n";
