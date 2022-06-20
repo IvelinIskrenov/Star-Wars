@@ -2,6 +2,19 @@
 #include <iostream>
 #include "Validations.h"
 
+size_t findPlanet(std::vector<Planet> cosmicPlanets, std::string planetName)
+{
+	size_t length = cosmicPlanets.size();
+	for (size_t i = 0; i < length; i++)
+	{
+		if (cosmicPlanets[i].getPlanetName() == planetName)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
 void createJedi(std::vector<Planet> cosmicPlanets)
 {
 	std::string jediName;
@@ -27,15 +40,15 @@ void createJedi(std::vector<Planet> cosmicPlanets)
 	}
 	if (planetExists(cosmicPlanets,planetName) == true && jediExists(cosmicPlanets, jediName) == false)
 	{
-		size_t length = cosmicPlanets.size();
-		for (size_t i = 0; i < length; i++)
+		size_t planetNumber = findPlanet(cosmicPlanets,planetName);
+		if (planetNumber != -1)
 		{
-			if (cosmicPlanets[i].getPlanetName() == planetName)
-			{
-				cosmicPlanets[i].addJedi(jedi);
-				std::cout << "Jedi added!\n";
-				break;
-			}
+			cosmicPlanets[planetNumber].addJedi(jedi);
+			std::cout << "Jedi added!\n";
+		}
+		else
+		{
+			std::cout << "Cant create new jedi,there is no planet with that name!\n";
 		}
 	}
 	else
@@ -175,36 +188,33 @@ void getStrongestJedi(std::vector<Planet> cosmicPlanets)
 {
 	std::string planetName;
 	std::cin >> planetName;
-	size_t length = cosmicPlanets.size();
+	size_t planetNumber = findPlanet(cosmicPlanets,planetName);
 	Jedi strongestJedi;
-	for (size_t i = 0; i < length; i++)
+	if (planetNumber != -1)
 	{
-		if (cosmicPlanets[i].getPlanetName() == planetName)
+		size_t jediCount = cosmicPlanets[planetNumber].getJedi().size();
+		if (jediCount > 0)
 		{
-			size_t jediCount = cosmicPlanets[i].getJedi().size();
-			if (jediCount > 0)
+			strongestJedi = cosmicPlanets[planetNumber].getJedi()[0];
+			for (size_t j = 0; j < jediCount; j++)
 			{
-				strongestJedi = cosmicPlanets[i].getJedi()[0];
-				for (size_t j = 0; j < jediCount; j++)
+				if (strongestJedi.getPower() < cosmicPlanets[planetNumber].getJedi()[j].getPower())
 				{
-					if (strongestJedi.getPower() < cosmicPlanets[i].getJedi()[i].getPower())
-					{
-						strongestJedi = cosmicPlanets[i].getJedi()[i];
-					}
+					strongestJedi = cosmicPlanets[planetNumber].getJedi()[j];
 				}
-				std::cout << "The strongest jedi " << strongestJedi.getName() << " with rank "
-					<< strongestJedi.getJediRank() << ", light saber color " << strongestJedi.getLightsaberColor()
-					<< ", age " << strongestJedi.getAge() << " have " << strongestJedi.getPower() << " power !\n";
 			}
-			else
-			{
-				std::cout << "There is no jedi on this planet!\n";
-			}
+			std::cout << "The strongest jedi " << strongestJedi.getName() << " with rank "
+				<< strongestJedi.getJediRank() << ", light saber color " << strongestJedi.getLightsaberColor()
+				<< ", age " << strongestJedi.getAge() << " have " << strongestJedi.getPower() << " power !\n";
 		}
 		else
 		{
-			std::cout << "There is no planet with that name!\n";
+			std::cout << "There is no jedi on this planet!\n";
 		}
+	}
+	else
+	{
+		std::cout << "There is no planet with that name!\n";
 	}
 }
 
@@ -214,56 +224,120 @@ void getYongestJedi(std::vector<Planet> cosmicPlanets)
 	std::cin >> planetName;
 	std::string rankJedi;
 	std::cin >> rankJedi;
-	size_t length = cosmicPlanets.size();
+	size_t planetNumber = findPlanet(cosmicPlanets,planetName);
 	Jedi yongestJedi;
 
 	//search the planet
-	for (size_t i = 0; i < length; i++)
+	if (planetNumber != -1)
 	{
-		if (cosmicPlanets[i].getPlanetName() == planetName)
+		size_t jediCount = cosmicPlanets[planetNumber].getJedi().size();
+		if (jediCount > 0)
 		{
-			size_t jediCount = cosmicPlanets[i].getJedi().size();
-			if (jediCount > 0)
+			bool yongestJediExists = false;
+			//search the first jedi with rank YOUNGLING
+			for (size_t j = 0; j < jediCount; j++)
 			{
-				bool yongestJediExists = false;
-				//search the first jedi with rank YOUNGLING
-				for (size_t j = 0; j < jediCount; j++)
+				if (cosmicPlanets[planetNumber].getJedi()[j].getJediRank() == "YOUNGLING")
 				{
-					if (cosmicPlanets[i].getJedi()[j].getJediRank() == "YOUNGLING")
+					yongestJedi = cosmicPlanets[planetNumber].getJedi()[j];
+					yongestJediExists = true;
+					//searching jedi with smallest name
+					for (size_t k = j; k < jediCount; k++)
 					{
-						yongestJedi = cosmicPlanets[i].getJedi()[j];
-						yongestJediExists = true;
-						//searching jedi with smallest name
-						for (size_t k = j; k < jediCount; k++)
+						if (yongestJedi.getName() < cosmicPlanets[planetNumber].getJedi()[k].getName())
 						{
-							if (yongestJedi.getName() < cosmicPlanets[i].getJedi()[k].getName())
-							{
-								yongestJedi = cosmicPlanets[i].getJedi()[k];
-							}
+							yongestJedi = cosmicPlanets[planetNumber].getJedi()[k];
 						}
-						break;
 					}
+					break;
 				}
-				if (yongestJediExists == false)
-				{
-					std::cout << "There is no jedi with rank YOUNGLING!\n";
-				}
-				else
-				{
-					std::cout << "The yongest jedi " << yongestJedi.getName() << " with rank "
-						<< yongestJedi.getJediRank() << ", light saber color " << yongestJedi.getLightsaberColor()
-						<< ", age " << yongestJedi.getAge() << " have " << yongestJedi.getPower() << " power !\n";
-				}
+			}
+			if (yongestJediExists == false)
+			{
+				std::cout << "There is no jedi with rank YOUNGLING!\n";
 			}
 			else
 			{
-				std::cout << "There is no jedi on this planet!\n";
+				std::cout << "The yongest jedi " << yongestJedi.getName() << " with rank "
+					<< yongestJedi.getJediRank() << ", light saber color " << yongestJedi.getLightsaberColor()
+					<< ", age " << yongestJedi.getAge() << " have " << yongestJedi.getPower() << " power !\n";
 			}
 		}
 		else
 		{
-			std::cout << "There is no planet with that name!\n";
+			std::cout << "There is no jedi on this planet!\n";
 		}
+	}
+	else
+	{
+		std::cout << "There is no planet with that name!\n";
+	}
+}
+
+void getMostUsedSaberColor(std::vector<Planet> cosmicPlanets)
+{
+	std::string jediRank;
+	std::cin >> jediRank;
+	std::string planetName;
+	std::cin >> planetName;
+	size_t planetNumber = findPlanet(cosmicPlanets,planetName);
+	if (planetNumber != -1)
+	{
+		Planet copyPlanet = cosmicPlanets[planetNumber];
+		size_t length = copyPlanet.getJedi().size();
+		//filter the planet -> only ranks we need
+		for (size_t i = 0; i < length; i++)
+		{
+			if (copyPlanet.getJedi()[i].getJediRank() != jediRank)
+			{
+				copyPlanet.getJedi().erase(copyPlanet.getJedi().begin() + i);
+				length--;
+			}
+		}
+		//-> get the saberColor
+		length = copyPlanet.getJedi().size();
+		std::string mainColorSaber;
+		int mainCSaberCount = 0;
+		if (length > 0)
+		{
+			mainColorSaber = copyPlanet.getJedi()[0].getLightsaberColor();
+			mainCSaberCount++;
+		}
+		for (size_t i = 1; i < length; i++)
+		{
+			if (copyPlanet.getJedi()[i].getLightsaberColor() == mainColorSaber)
+			{
+				copyPlanet.getJedi().erase(copyPlanet.getJedi().begin() + i);
+				mainCSaberCount++;
+				length--;
+			}
+		}
+		while (length != 0)
+		{
+			std::string currentColorLightsaber;
+			int currentCSaberCount = 0;
+			currentColorLightsaber = copyPlanet.getJedi()[0].getLightsaberColor();
+			currentCSaberCount++;
+			for (size_t i = 1; i < length; i++)
+			{
+				if (copyPlanet.getJedi()[i].getLightsaberColor() == currentColorLightsaber)
+				{
+					copyPlanet.getJedi().erase(copyPlanet.getJedi().begin() + i);
+					currentCSaberCount++;
+					length--;
+				}
+			}
+			if (mainCSaberCount < currentCSaberCount)
+			{
+				mainColorSaber = currentColorLightsaber;
+			}
+		}
+		std::cout << "Main color saber which is used from jedis with rank " << jediRank << " on planet " << planetName
+			<< " is a " << mainColorSaber << " !\n";
+	}
+	else
+	{
+		std::cout << "There is no planet with that name!\n";
 	}
 }
 
