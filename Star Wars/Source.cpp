@@ -1,16 +1,12 @@
 #include <iostream>
 #include "Jedi.h"
 #include "Planet.h"
+#include "GeneralFunctions.h"
 
-void addJedi()
-{
-
-}
 
 int main()
 {
-	//Jedi firstJedi("dart", "INITIATE", 20, "blue", 22);
-	Jedi secondJedi;
-	//secondJedi = firstJedi;
+	std::cout << "Welcome to Star Wars Universe !\n\n";
+	testProgram();
 	return 0;
 }

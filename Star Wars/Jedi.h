@@ -30,5 +30,6 @@ public:
 	void setJediRank(std::string newRank);
 	//Проверява дали ранга е правилен
 	std::string getName() { return name; };
+	friend std::ostream& operator<<(std::ostream& out,const Jedi& jedi);
 };
 

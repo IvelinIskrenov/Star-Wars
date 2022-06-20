@@ -20,5 +20,6 @@ public:
 	std::string getPlanetName() { return planetName; };
 	void addJedi(const Jedi& jediToAdd);
 	void removeJedi(size_t removeIndex);
+	friend std::ostream& operator<<(std::ostream&, const Planet& planet);
 };
 

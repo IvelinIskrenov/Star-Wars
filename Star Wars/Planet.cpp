@@ -14,7 +14,7 @@ void Planet::copy(const Planet& other)
 Planet::Planet()
 {
 	planetName = "";
-	jedi.emplace_back();
+	jedi.clear();
 }
 
 Planet::Planet(const Planet& other)
@@ -39,4 +39,14 @@ void Planet::addJedi(const Jedi& jediToAdd)
 void Planet::removeJedi(size_t removeIndex)
 {
 	jedi.erase(jedi.begin() + removeIndex);
+}
+
+std::ostream& operator<<(std::ostream& out, const Planet& planet)
+{
+	size_t length = planet.jedi.size();
+	for (size_t i = 0; i < length; i++)
+	{
+		out << planet.jedi[i];
+	}
+	return out;
 }
