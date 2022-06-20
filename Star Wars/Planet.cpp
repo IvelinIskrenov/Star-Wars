@@ -31,6 +31,11 @@ Planet& Planet::operator=(const Planet& other)
 	return *this;
 }
 
+void Planet::setPlanetName(std::string _planetName)
+{
+	planetName = _planetName;
+}
+
 void Planet::addJedi(const Jedi& jediToAdd)
 {
 	jedi.push_back(jediToAdd);

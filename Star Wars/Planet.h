@@ -18,6 +18,7 @@ public:
 	Planet& operator=(const Planet& other);
 	std::vector<Jedi>& getJedi() { return jedi; };
 	std::string getPlanetName() { return planetName; };
+	void setPlanetName(std::string _planetName);
 	void addJedi(const Jedi& jediToAdd);
 	void removeJedi(size_t removeIndex);
 	friend std::ostream& operator<<(std::ostream&, const Planet& planet);

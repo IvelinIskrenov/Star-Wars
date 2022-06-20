@@ -2,8 +2,9 @@
 #include <iostream>
 #include "Validations.h"
 #include <fstream>
+#include <string>
 
-size_t findPlanet(std::vector<Planet> cosmicPlanets, std::string planetName)
+size_t findPlanet(std::vector<Planet>& cosmicPlanets, std::string planetName)
 {
 	size_t length = cosmicPlanets.size();
 	for (size_t i = 0; i < length; i++)
@@ -16,7 +17,31 @@ size_t findPlanet(std::vector<Planet> cosmicPlanets, std::string planetName)
 	return -1;
 }
 
-void createJedi(std::vector<Planet> cosmicPlanets)
+void addPlanet(std::vector<Planet>& cosmicPlanets)
+{
+	std::cout << "Enter name of planet which you want to add:\n";
+	std::string planetName;
+	std::cin >> planetName;
+	if (planetExists(cosmicPlanets,planetName))
+	{
+		std::cout << "Planet already exists!\n";
+	}
+	else
+	{
+		Planet newPlanet;
+		newPlanet.setPlanetName(planetName);
+		cosmicPlanets.push_back(newPlanet);
+	}
+}
+
+void addPlanet(std::vector<Planet>& cosmicPlanets, std::string planetName)
+{
+	Planet newPlanet;
+	newPlanet.setPlanetName(planetName);
+	cosmicPlanets.push_back(newPlanet);
+}
+
+void createJedi(std::vector<Planet>& cosmicPlanets)
 {
 	std::cout << "Enter jedi name which you want to add:\n";
 	std::string jediName;
@@ -78,7 +103,7 @@ void createJedi(std::vector<Planet> cosmicPlanets)
 	}
 }
 
-void removeJedi(std::vector<Planet> cosmicPlanets)
+void removeJedi(std::vector<Planet>& cosmicPlanets)
 {
 	std::cout << "Enter jedi name which you want to remove:\n";
 	std::string jediName;
@@ -109,7 +134,7 @@ void removeJedi(std::vector<Planet> cosmicPlanets)
 	}
 }
 
-void promoteJedi(std::vector<Planet> cosmicPlanets)
+void promoteJedi(std::vector<Planet>& cosmicPlanets)
 {
 	std::cout << "Enter multiplier index how much you want to increase jedi's power:\n";
 	double multiplier;
@@ -160,7 +185,7 @@ void promoteJedi(std::vector<Planet> cosmicPlanets)
 	}
 }
 
-void demoteJedi(std::vector<Planet> cosmicPlanets)
+void demoteJedi(std::vector<Planet>& cosmicPlanets)
 {
 	std::cout << "Enter multiplier index how much you want to decrease jedi's power:\n";
 	double multiplier;
@@ -211,7 +236,7 @@ void demoteJedi(std::vector<Planet> cosmicPlanets)
 	}
 }
 
-void getStrongestJedi(std::vector<Planet> cosmicPlanets)
+void getStrongestJedi(std::vector<Planet>& cosmicPlanets)
 {
 	std::cout << "Enter planet name:\n";
 	std::string planetName;
@@ -246,7 +271,7 @@ void getStrongestJedi(std::vector<Planet> cosmicPlanets)
 	}
 }
 
-void getYongestJedi(std::vector<Planet> cosmicPlanets)
+void getYongestJedi(std::vector<Planet>& cosmicPlanets)
 {
 	std::cout << "Enter planet name:\n";
 	std::string planetName;
@@ -320,7 +345,7 @@ void getYongestJedi(std::vector<Planet> cosmicPlanets)
 	}
 }
 
-void getMostUsedSaberColor(std::vector<Planet> cosmicPlanets)
+void getMostUsedSaberColor(std::vector<Planet>& cosmicPlanets)
 {
 	std::cout << "Enter jedi rank which you want to get the most used saber color:\n";
 	std::string jediRank;
@@ -390,7 +415,7 @@ void getMostUsedSaberColor(std::vector<Planet> cosmicPlanets)
 	}
 }
 
-void getMostUsedSaberColorGM(std::vector<Planet> cosmicPlanets)
+void getMostUsedSaberColorGM(std::vector<Planet>& cosmicPlanets)
 {
 	std::cout << "Enter planet name:\n";
 	std::string planetName;
@@ -497,7 +522,7 @@ int getJediRankNumber(std::string jediRank)
 	}
 }
 
-void print(std::vector<Planet> cosmicPlanets)
+void print(std::vector<Planet>& cosmicPlanets)
 {
 	std::string planetName;
 	std::cin >> planetName;
@@ -544,7 +569,7 @@ void print(std::vector<Planet> cosmicPlanets)
 	}
 }
 
-void printJedi(std::vector<Planet> cosmicPlanets)
+void printJedi(std::vector<Planet>& cosmicPlanets)
 {
 	std::string jediName;
 	std::cin >> jediName;
@@ -573,7 +598,7 @@ void printJedi(std::vector<Planet> cosmicPlanets)
 	}
 }
 
-void concatPlanets(std::vector<Planet> cosmicPlanets)
+void concatPlanets(std::vector<Planet>& cosmicPlanets)
 {
 	std::string firstPlanetName, secondPlanetName;
 	std::cin >> firstPlanetName;
@@ -615,7 +640,12 @@ void concatPlanets(std::vector<Planet> cosmicPlanets)
 	}
 }
 
-void save(std::vector<Planet> cosmicPlanets)
+int stepInfo()
+{
+	return 0;
+}
+
+void save(std::vector<Planet>& cosmicPlanets)
 {
 	std::ofstream out;
 	//ofs.open("test.txt", ios::out | ios::trunc);
@@ -633,16 +663,70 @@ void save(std::vector<Planet> cosmicPlanets)
 	out.close();
 }
 
-void read(std::vector<Planet> cosmicPlanets)
+//check
+void read(std::vector<Planet>& cosmicPlanets)
 {
+	cosmicPlanets.clear();
 	std::ifstream in;
 	in.open("StarWarsUni.txt");
+	in.seekg(0, std::ios::beg);
+	char c = 0;
+	int steps = 0;
+	while (!in.eof() )
+	{
+		std::string jediName;
+		std::string rank;
+		unsigned age;
+		std::string lightsaberColor;
+		double power;
+		std::string planetName;
+		while (steps != 6)
+		{
+			while (c != ':')
+			{
+				in.get(c);
+			}
+			std::string info = "";
+			while (c != ',' && c != '\n' && c != ' ')
+			{
+				in.get(c);
+				info += c;
+			}
+
+			switch (steps)
+			{
+			case 1:jediName = info; break;
+			case 2:rank = info; break;
+			case 3:age = stoi(info); break;
+			case 4:lightsaberColor = info; break;
+			case 5:power = stod(info); break;
+			case 6:planetName = info; break;
+			default:
+				break;
+			}
+			steps++;
+		}
+		if (planetExists(cosmicPlanets,planetName) == true)
+		{
+			Jedi jedi(jediName, rank, age, lightsaberColor, power, planetName);
+			size_t planetNumber = findPlanet(cosmicPlanets, planetName);
+			cosmicPlanets[planetNumber].addJedi(jedi);
+		}
+		else
+		{
+			addPlanet(cosmicPlanets,planetName);
+			Jedi jedi(jediName, rank, age, lightsaberColor, power, planetName);
+			size_t planetNumber = findPlanet(cosmicPlanets, planetName);
+			cosmicPlanets[planetNumber].addJedi(jedi);
+		}
+	}
 	in.close();
 }
 
 void testProgram()
 {	
 	std::cout << "Commands:\n";
+	std::cout << "add_planet : Adding planet to space\n";
 	std::cout << "create_jedi : Create jedi\n";
 	std::cout << "remove_jedi : Remove jedi\n";
 	std::cout << "promote_jedi : Promote jedi \n";
@@ -715,6 +799,10 @@ void testProgram()
 		else if (command == "print_planetsName")
 		{
 			concatPlanets(cosmicPlanets);
+		}
+		else if (command == "add_planet")
+		{
+			addPlanet(cosmicPlanets);
 		}
 		else
 		{

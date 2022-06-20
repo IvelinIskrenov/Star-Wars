@@ -80,9 +80,9 @@ void Jedi::setJediRank(std::string newRank)
 
 std::ostream& operator<<(std::ostream& out,const Jedi& jedi)
 {
-	out << "Name:" << jedi.name << "  rank:" << jedi.rank << "  age:" << jedi.age
-		<< "  lightsaberColor:" << jedi.lightsaberColor << "  power:" << jedi.power
-		<< " lived on planet:" << jedi.planetName << '\n';
+	out << "Name:" << jedi.name << ",  rank:" << jedi.rank << ",  age:" << jedi.age
+		<< ",  lightsaberColor:" << jedi.lightsaberColor << ",  power:" << jedi.power
+		<< ", lived on planet:" << jedi.planetName << '\n';
 	return out;
 }
 
