@@ -649,7 +649,7 @@ void save(std::vector<Planet>& cosmicPlanets)
 {
 	std::ofstream out;
 	//ofs.open("test.txt", ios::out | ios::trunc);
-	out.open("test.txt", std::ios::out | std::ios::trunc);
+	out.open("StarWarsUni.txt", std::ios::out | std::ios::trunc);
 	//out.open("StarWarsUni.txt", std::ios::app);
 	if (out)
 	{
@@ -664,62 +664,140 @@ void save(std::vector<Planet>& cosmicPlanets)
 }
 
 //check
+//void read(std::vector<Planet>& cosmicPlanets)
+//{
+//	cosmicPlanets.clear();
+//	std::ifstream in;
+//	in.open("StarWarsUni.txt");
+//	in.seekg(0, std::ios::beg);
+//	char c = 0;
+//	int steps = 1;
+//	while (c != '~')
+//	{
+//		std::string jediName;
+//		std::string rank;
+//		unsigned age;
+//		std::string lightsaberColor;
+//		double power;
+//		std::string planetName;
+//		steps = 1;
+//		while (steps != 6)
+//		{
+//			while (c != ':')
+//			{
+//				in.get(c);
+//			}
+//			std::string info = "";
+//			while (c != ',' && c != '\n' && c != ' ')
+//			{
+//				in.get(c);
+//				info += c;
+//			}
+//
+//			switch (steps)
+//			{
+//			case 1:jediName = info; break;
+//			case 2:rank = info; break;
+//			case 3:age = stoi(info); break;
+//			case 4:lightsaberColor = info; break;
+//			case 5:power = stod(info); break;
+//			case 6:planetName = info; break;
+//			default:
+//				break;
+//			}
+//			steps++;
+//		}
+//		if (planetExists(cosmicPlanets,planetName) == true)
+//		{
+//			Jedi jedi(jediName, rank, age, lightsaberColor, power, planetName);
+//			size_t planetNumber = findPlanet(cosmicPlanets, planetName);
+//			cosmicPlanets[planetNumber].addJedi(jedi);
+//		}
+//		else
+//		{
+//			addPlanet(cosmicPlanets,planetName);
+//			Jedi jedi(jediName, rank, age, lightsaberColor, power, planetName);
+//			size_t planetNumber = findPlanet(cosmicPlanets, planetName);
+//			cosmicPlanets[planetNumber].addJedi(jedi);
+//		}
+//	}
+//	in.close();
+//}
+
 void read(std::vector<Planet>& cosmicPlanets)
 {
 	cosmicPlanets.clear();
 	std::ifstream in;
 	in.open("StarWarsUni.txt");
-	in.seekg(0, std::ios::beg);
 	char c = 0;
-	int steps = 0;
-	while (!in.eof() )
+	int steps;
+	char* buffer = nullptr;
+	if (in)
 	{
-		std::string jediName;
-		std::string rank;
-		unsigned age;
-		std::string lightsaberColor;
-		double power;
-		std::string planetName;
-		while (steps != 6)
+		int size;
+		in.seekg(0, std::ios::end);
+		size = in.tellg();
+		in.seekg(0, std::ios::beg);
+		buffer = new char[size + 1];
+		in.read(buffer, size);
+		buffer[size] = '\0';
+		//start my code
+		size_t number = 0;
+		c = buffer[number];
+		while (c != '~')
 		{
-			while (c != ':')
+			std::string jediName;
+			std::string rank;
+			unsigned age;
+			std::string lightsaberColor;
+			double power;
+			std::string planetName;
+			steps = 1;
+			while (steps != 6)
 			{
-				in.get(c);
-			}
-			std::string info = "";
-			while (c != ',' && c != '\n' && c != ' ')
-			{
-				in.get(c);
-				info += c;
-			}
+				while (c != ':')
+				{
+					number++;
+					c = buffer[number];
+				}
+				std::string info = "";
+				while (c != ',' || c != '\n' || c != ' ')
+				{
+					number++;
+					c = buffer[number];
+					info += c;
+				}
 
-			switch (steps)
-			{
-			case 1:jediName = info; break;
-			case 2:rank = info; break;
-			case 3:age = stoi(info); break;
-			case 4:lightsaberColor = info; break;
-			case 5:power = stod(info); break;
-			case 6:planetName = info; break;
-			default:
-				break;
+				switch (steps)
+				{
+				case 1:jediName = info; break;
+				case 2:rank = info; break;
+				case 3:age = stoi(info); break;
+				case 4:lightsaberColor = info; break;
+				case 5:power = stod(info); break;
+				case 6:planetName = info; break;
+				default:
+					break;
+				}
+				steps++;
 			}
-			steps++;
+			if (planetExists(cosmicPlanets, planetName) == true)
+			{
+				Jedi jedi(jediName, rank, age, lightsaberColor, power, planetName);
+				size_t planetNumber = findPlanet(cosmicPlanets, planetName);
+				cosmicPlanets[planetNumber].addJedi(jedi);
+			}
+			else
+			{
+				addPlanet(cosmicPlanets, planetName);
+				Jedi jedi(jediName, rank, age, lightsaberColor, power, planetName);
+				size_t planetNumber = findPlanet(cosmicPlanets, planetName);
+				cosmicPlanets[planetNumber].addJedi(jedi);
+			}
 		}
-		if (planetExists(cosmicPlanets,planetName) == true)
-		{
-			Jedi jedi(jediName, rank, age, lightsaberColor, power, planetName);
-			size_t planetNumber = findPlanet(cosmicPlanets, planetName);
-			cosmicPlanets[planetNumber].addJedi(jedi);
-		}
-		else
-		{
-			addPlanet(cosmicPlanets,planetName);
-			Jedi jedi(jediName, rank, age, lightsaberColor, power, planetName);
-			size_t planetNumber = findPlanet(cosmicPlanets, planetName);
-			cosmicPlanets[planetNumber].addJedi(jedi);
-		}
+		//ends my code
 	}
+	
 	in.close();
 }
 
@@ -748,12 +826,14 @@ void testProgram()
 	std::cout << "BATTLE_MASTER\n";
 	std::cout << "GRAND_MASTER\n";
 
+	
 	std::cout << "Enter command:\n";
 	std::string command;
 	std::cin >> command;
 
 	std::vector<Planet> cosmicPlanets;
-
+	//save(cosmicPlanets);
+	read(cosmicPlanets);
 	while (command != "exit")
 	{
 		if (command == "create_jedi")
@@ -811,6 +891,7 @@ void testProgram()
 		std::cout << "Enter command:\n";
 		std::cin >> command;
 	}
+	save(cosmicPlanets);
 }
 
 //myString productName;

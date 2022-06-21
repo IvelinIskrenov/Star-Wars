@@ -10,6 +10,7 @@ class Planet
 {
 private :
 	std::string planetName;
+	//джедаите които населяват тази планета
 	std::vector<Jedi> jedi;
 	void copy(const Planet& other);
 public:
@@ -19,7 +20,9 @@ public:
 	std::vector<Jedi>& getJedi() { return jedi; };
 	std::string getPlanetName() { return planetName; };
 	void setPlanetName(std::string _planetName);
+	//добавя джедай на планетата
 	void addJedi(const Jedi& jediToAdd);
+	//премахва джедай от планетата
 	void removeJedi(size_t removeIndex);
 	friend std::ostream& operator<<(std::ostream&, const Planet& planet);
 };
